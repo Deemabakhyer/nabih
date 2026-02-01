@@ -1,12 +1,7 @@
-
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AddMedScreen extends StatelessWidget {
+  const AddMedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +47,9 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
         child: Container(
           height: 48,
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFFE0C36E) : const Color(0xFF1C1F26),
+            color: isSelected
+                ? const Color(0xFFE0C36E)
+                : const Color(0xFF1C1F26),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Center(
@@ -75,15 +72,14 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
       children: [
         Row(
           children: [
-            if (icon != null) Icon(icon, color: const Color(0xFFE0C36E), size: 18),
+            if (icon != null)
+              Icon(icon, color: const Color(0xFFE0C36E), size: 18),
             if (icon != null) const SizedBox(width: 6),
             Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
         const SizedBox(height: 8),
-        TextField(
-          decoration: InputDecoration(hintText: hint),
-        ),
+        TextField(decoration: InputDecoration(hintText: hint)),
         const SizedBox(height: 16),
       ],
     );
@@ -101,7 +97,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.arrow_forward_ios),
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -110,7 +106,10 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildField("اسم الدواء *", "مثال: بانادول", icon: Icons.link),
-            const Text("نوع الدواء *", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text(
+              "نوع الدواء *",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -136,8 +135,16 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            buildField("المدة *", "مثال: لمدة 7 أيام", icon: Icons.calendar_month),
-            buildField("ملاحظات إضافية", "أي ملاحظات مهمة...", icon: Icons.description),
+            buildField(
+              "المدة *",
+              "مثال: لمدة 7 أيام",
+              icon: Icons.calendar_month,
+            ),
+            buildField(
+              "ملاحظات إضافية",
+              "أي ملاحظات مهمة...",
+              icon: Icons.description,
+            ),
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
@@ -152,10 +159,14 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                 onPressed: () {},
                 child: const Text(
                   "إضافة الدواء",
-                  style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

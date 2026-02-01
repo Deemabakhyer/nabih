@@ -181,13 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (_) => MedDetailsScreen(
-              name: name,
-              dosage: dosage,
-              frequency: frequency,
-            ),
-          ),
+          MaterialPageRoute(builder: (_) => MedDetailsScreen()),
         );
       },
       child: Container(

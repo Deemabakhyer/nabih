@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MedDetailsScreen extends StatelessWidget {
+  const MedDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +10,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color(0xFF0F1117),
-        textTheme: GoogleFonts.cairoTextTheme(
-          ThemeData.dark().textTheme,
-        ),
+        textTheme: GoogleFonts.cairoTextTheme(ThemeData.dark().textTheme),
       ),
       home: const MedicineDetailsScreen(),
     );
@@ -50,10 +44,7 @@ class MedicineDetailsScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              _infoCard(
-                title: "بانادول",
-                subtitle: "أقراص",
-              ),
+              _infoCard(title: "بانادول", subtitle: "أقراص"),
               const SizedBox(height: 16),
 
               _iconCard(
@@ -86,7 +77,10 @@ class MedicineDetailsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -94,14 +88,21 @@ class MedicineDetailsScreen extends StatelessWidget {
               color: const Color(0xFF2A2D36),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Text(subtitle, style: const TextStyle(color: Color(0xFFD6B56E))),
+            child: Text(
+              subtitle,
+              style: const TextStyle(color: Color(0xFFD6B56E)),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _iconCard({required IconData icon, required String title, required String value}) {
+  Widget _iconCard({
+    required IconData icon,
+    required String title,
+    required String value,
+  }) {
     return _baseCard(
       child: Row(
         children: [
@@ -135,7 +136,10 @@ class MedicineDetailsScreen extends StatelessWidget {
           const SizedBox(height: 8),
           const Text("3 مرات يوميًا"),
           const SizedBox(height: 12),
-          const Text("أوقات التناول:", style: TextStyle(color: Color(0xFFD6B56E))),
+          const Text(
+            "أوقات التناول:",
+            style: TextStyle(color: Color(0xFFD6B56E)),
+          ),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
@@ -166,7 +170,10 @@ class MedicineDetailsScreen extends StatelessWidget {
             children: [
               Icon(Icons.warning_amber_rounded, color: Colors.orange),
               SizedBox(width: 8),
-              Text("تحذيرات مهمة", style: TextStyle(color: Colors.orange, fontSize: 16)),
+              Text(
+                "تحذيرات مهمة",
+                style: TextStyle(color: Colors.orange, fontSize: 16),
+              ),
             ],
           ),
           SizedBox(height: 12),

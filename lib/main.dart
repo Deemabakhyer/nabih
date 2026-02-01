@@ -31,14 +31,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/health-report', page: () => HealthReportScreen()),
         GetPage(name: '/reminders', page: () => RemindersScreen()),
         GetPage(name: '/add-med', page: () => AddMedScreen()),
-        GetPage(
-          name: '/med-details',
-          page: () => MedDetailsScreen(
-            name: 'panadol',
-            dosage: '500 mg',
-            frequency: '3 times a day',
-          ),
-        ),
+        GetPage(name: '/med-details', page: () => MedDetailsScreen()),
       ],
     );
   }
