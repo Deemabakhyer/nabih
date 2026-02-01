@@ -1,24 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
+import 'home_screen.dart';
 
 class MedDetailsScreen extends StatelessWidget {
   const MedDetailsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color(0xFF0F1117),
-        textTheme: GoogleFonts.cairoTextTheme(ThemeData.dark().textTheme),
-      ),
-      home: const MedicineDetailsScreen(),
-    );
-  }
-}
-
-class MedicineDetailsScreen extends StatelessWidget {
-  const MedicineDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +14,12 @@ class MedicineDetailsScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: const Text("تفاصيل الدواء"),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.arrow_forward_ios),
-              onPressed: () {},
-            ),
-          ],
+          centerTitle: true,
           leading: IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
-            onPressed: () {},
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Get.offAll(() => const HomeScreen());
+            },
           ),
         ),
         body: SingleChildScrollView(

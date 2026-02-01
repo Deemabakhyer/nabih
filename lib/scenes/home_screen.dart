@@ -179,10 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => MedDetailsScreen()),
-        );
+        Get.to(() => const MedDetailsScreen());
       },
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -241,7 +238,6 @@ class _HomeScreenState extends State<HomeScreen> {
         unselectedItemColor: Colors.grey,
         onTap: (index) {
           navController.changeIndex(index);
-
           switch (index) {
             case 0:
               Get.offAll(() => const RemindersScreen());

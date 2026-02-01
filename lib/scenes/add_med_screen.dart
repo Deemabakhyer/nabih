@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'home_screen.dart';
 
 class AddMedScreen extends StatelessWidget {
   const AddMedScreen({super.key});
@@ -93,12 +95,12 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.arrow_forward_ios),
-          ),
-        ],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Get.offAll(() => const HomeScreen()); // ✅ GetX navigation to Home
+          },
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

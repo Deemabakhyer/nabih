@@ -42,19 +42,10 @@ class LoginScreen extends StatelessWidget {
 
   Widget _buildHeader() {
     return Column(
-      children: const [
-        Text(
-          'نبيه',
-          style: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFFE6C76A),
-          ),
-        ),
-        SizedBox(height: 8),
-        Text('Nabih', style: TextStyle(color: Color(0xFFE6C76A))),
-        SizedBox(height: 12),
-        Text(
+      children: [
+        Image.asset('assets/logo.png', height: 100),
+        const SizedBox(height: 12),
+        const Text(
           'مساعدك الدوائي الذكي',
           style: TextStyle(color: Colors.grey, fontSize: 14),
         ),
