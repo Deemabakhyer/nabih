@@ -1,6 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'home_screen.dart';
+import 'reminders_screen.dart';
 
 class HealthReportScreen extends StatelessWidget {
   const HealthReportScreen({super.key});
@@ -13,6 +16,10 @@ class HealthReportScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Get.back(), // ✅ GetX back
+          ),
           title: const Column(
             children: [
               Text(
@@ -28,6 +35,7 @@ class HealthReportScreen extends StatelessWidget {
           ),
           centerTitle: true,
         ),
+
         bottomNavigationBar: _buildBottomNav(),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -247,6 +255,19 @@ class HealthReportScreen extends StatelessWidget {
       backgroundColor: const Color(0xFF0F1117),
       selectedItemColor: const Color(0xFFFFD54F),
       unselectedItemColor: Colors.grey,
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            Get.offAll(() => const RemindersScreen());
+            break;
+          case 1:
+            // أنتِ بالفعل هنا – لا شي
+            break;
+          case 2:
+            Get.offAll(() => const HomeScreen());
+            break;
+        }
+      },
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
@@ -256,10 +277,7 @@ class HealthReportScreen extends StatelessWidget {
           icon: Icon(Icons.qr_code),
           label: 'التقرير الصحي',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.edit),
-          label: 'أدويتي',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.edit), label: 'أدويتي'),
       ],
     );
   }

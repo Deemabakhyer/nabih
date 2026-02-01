@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'add_med_screen.dart';
+import 'reminders_screen.dart';
+import 'health_report_screen.dart';
+import 'med_details_screen.dart';
+import '/controllers/btm_nav_controller.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final BottomNavController navController = Get.put(BottomNavController());
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +141,12 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AddMedScreen()),
+                );
+              },
               icon: const Icon(Icons.add, color: Color(0xFFE6C76A)),
               label: const Text(
                 'إضافة دواء',
@@ -158,77 +176,105 @@ class HomeScreen extends StatelessWidget {
     required String dosage,
     required String frequency,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1D26),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(dosage, style: const TextStyle(color: Colors.grey)),
-                const SizedBox(height: 4),
-                Text(
-                  frequency,
-                  style: const TextStyle(
-                    color: Color(0xFFE6C76A),
-                    fontSize: 12,
-                  ),
-                ),
-              ],
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => MedDetailsScreen(
+              name: name,
+              dosage: dosage,
+              frequency: frequency,
             ),
           ),
-          Container(
-            height: 36,
-            width: 36,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Color(0xFF2A2D36),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: const Color(0xFF1A1D26),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(dosage, style: const TextStyle(color: Colors.grey)),
+                  const SizedBox(height: 4),
+                  Text(
+                    frequency,
+                    style: const TextStyle(
+                      color: Color(0xFFE6C76A),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            child: const Icon(
-              Icons.edit,
-              size: 18,
-              color: Color(0xFFE6C76A),
+            Container(
+              height: 36,
+              width: 36,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xFF2A2D36),
+              ),
+              child: const Icon(Icons.edit, size: 18, color: Color(0xFFE6C76A)),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   // 🔻 Bottom navigation
   Widget _buildBottomNav() {
-    return BottomNavigationBar(
-      currentIndex: 2,
-      backgroundColor: const Color(0xFF0F1117),
-      selectedItemColor: const Color(0xFFE6C76A),
-      unselectedItemColor: Colors.grey,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.notifications),
-          label: 'التذكيرات',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.qr_code),
-          label: 'التقرير الصحي',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.medication),
-          label: 'أدويتي',
-        ),
-      ],
+    return Obx(
+      () => BottomNavigationBar(
+        currentIndex: navController.currentIndex.value,
+        backgroundColor: const Color(0xFF0F1117),
+        selectedItemColor: const Color(0xFFE6C76A),
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          navController.changeIndex(index);
+
+          switch (index) {
+            case 0:
+              Get.offAll(() => const RemindersScreen());
+              break;
+            case 1:
+              Get.offAll(() => const HealthReportScreen());
+              break;
+            case 2:
+              Get.offAll(() => const HomeScreen());
+              break;
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'التذكيرات',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code),
+            label: 'التقرير الصحي',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.medication),
+            label: 'أدويتي',
+          ),
+        ],
+      ),
     );
   }
 }

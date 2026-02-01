@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controllers/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -16,7 +20,6 @@ class LoginScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 24),
 
-                // 🌐 Language icon
                 Align(
                   alignment: Alignment.topLeft,
                   child: IconButton(
@@ -26,36 +29,9 @@ class LoginScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 40),
-
-                // 🟨 Logo + title
                 _buildHeader(),
-
                 const SizedBox(height: 40),
-
-                // 🔐 Login card
-                _buildLoginCard(),
-
-                const SizedBox(height: 20),
-
-                // 🔵 Nafath login
-                _buildNafathButton(),
-
-                const SizedBox(height: 24),
-
-                // OR
-                _buildDivider(),
-
-                const SizedBox(height: 24),
-
-                // 👤 Guest login
-                _buildGuestButton(),
-
-                const SizedBox(height: 12),
-
-                const Text(
-                  'للتصفح والاطلاع فقط بدون حفظ البيانات',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                ),
+                _buildLoginCard(controller),
               ],
             ),
           ),
@@ -64,7 +40,6 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  // 🟨 Header
   Widget _buildHeader() {
     return Column(
       children: const [
@@ -77,10 +52,7 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8),
-        Text(
-          'Nabih',
-          style: TextStyle(color: Color(0xFFE6C76A)),
-        ),
+        Text('Nabih', style: TextStyle(color: Color(0xFFE6C76A))),
         SizedBox(height: 12),
         Text(
           'مساعدك الدوائي الذكي',
@@ -90,151 +62,117 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  // 🔐 Login card
-  Widget _buildLoginCard() {
+  Widget _buildLoginCard(LoginController controller) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: const Color(0xFF1A1D26),
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Text(
-            'تسجيل الدخول',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 6),
-          const Text(
-            'استخدم بيانات حسابك في تطبيق نسك',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey, fontSize: 12),
-          ),
-          const SizedBox(height: 20),
+      child: Form(
+        key: controller.formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              'تسجيل الدخول',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
 
-          // ID field
-          _buildTextField(
-            hint: 'رقم الهوية',
-            icon: Icons.badge_outlined,
-            keyboardType: TextInputType.number,
-          ),
+            _buildIdField(controller),
+            const SizedBox(height: 16),
 
-          const SizedBox(height: 16),
+            _buildPasswordField(controller),
+            const SizedBox(height: 24),
 
-          // Password field
-          _buildTextField(
-            hint: 'الرمز السري',
-            icon: Icons.lock_outline,
-            isPassword: true,
-          ),
-
-          const SizedBox(height: 24),
-
-          // Login button
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFE6C76A),
-              foregroundColor: Colors.black,
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
+            ElevatedButton(
+              onPressed: controller.login,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFE6C76A),
+                foregroundColor: Colors.black,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+              ),
+              child: const Text(
+                'تسجيل الدخول',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
-            child: const Text(
-              'تسجيل الدخول',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          const SizedBox(height: 12),
-
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              'تسجيل دخول سند',
-              style: TextStyle(color: Colors.grey),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // 🔵 Nafath
-  Widget _buildNafathButton() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      decoration: BoxDecoration(
-        color: const Color(0xFF14233D),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: const Text(
-        'نبيه مدمج مع تطبيق نسك باستخدام نفس بيانات تسجيل الدخول',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.lightBlueAccent, fontSize: 13),
-      ),
-    );
-  }
-
-  // OR divider
-  Widget _buildDivider() {
-    return Row(
-      children: const [
-        Expanded(child: Divider(color: Colors.grey)),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          child: Text('أو', style: TextStyle(color: Colors.grey)),
+          ],
         ),
-        Expanded(child: Divider(color: Colors.grey)),
-      ],
-    );
-  }
-
-  // 👤 Guest
-  Widget _buildGuestButton() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1D26),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: const Text(
-        'الدخول كضيف',
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 14),
       ),
     );
   }
 
-  // 🧾 Input field
-  Widget _buildTextField({
+  Widget _buildIdField(LoginController controller) {
+    return TextFormField(
+      controller: controller.idController,
+      keyboardType: TextInputType.number,
+      style: const TextStyle(color: Colors.white),
+      validator: (value) {
+        if (value == null || value.isEmpty) return 'رقم الهوية مطلوب';
+        if (value.length != 10) return 'رقم الهوية يجب أن يكون 10 أرقام';
+        if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+          return 'رقم الهوية يجب أن يحتوي أرقام فقط';
+        }
+        return null;
+      },
+      decoration: _inputDecoration(
+        hint: 'رقم الهوية',
+        icon: Icons.badge_outlined,
+      ),
+    );
+  }
+
+  Widget _buildPasswordField(LoginController controller) {
+    return Obx(
+      () => TextFormField(
+        controller: controller.passwordController,
+        obscureText: controller.obscurePassword.value,
+        style: const TextStyle(color: Colors.white),
+        validator: (value) {
+          if (value == null || value.isEmpty) return 'الرمز السري مطلوب';
+          if (value.length < 6) {
+            return 'الرمز السري يجب ألا يقل عن 6 خانات';
+          }
+          return null;
+        },
+        decoration: _inputDecoration(
+          hint: 'الرمز السري',
+          icon: Icons.lock_outline,
+          suffix: IconButton(
+            icon: Icon(
+              controller.obscurePassword.value
+                  ? Icons.visibility_off
+                  : Icons.visibility,
+              color: Colors.grey,
+            ),
+            onPressed: controller.togglePassword,
+          ),
+        ),
+      ),
+    );
+  }
+
+  InputDecoration _inputDecoration({
     required String hint,
     required IconData icon,
-    bool isPassword = false,
-    TextInputType keyboardType = TextInputType.text,
+    Widget? suffix,
   }) {
-    return TextField(
-      obscureText: isPassword,
-      keyboardType: keyboardType,
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: const TextStyle(color: Colors.grey),
-        prefixIcon: Icon(icon, color: Colors.grey),
-        suffixIcon: isPassword
-            ? const Icon(Icons.visibility_off, color: Colors.grey)
-            : null,
-        filled: true,
-        fillColor: const Color(0xFF12141A),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide.none,
-        ),
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: const TextStyle(color: Colors.grey),
+      prefixIcon: Icon(icon, color: Colors.grey),
+      suffixIcon: suffix,
+      filled: true,
+      fillColor: const Color(0xFF12141A),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14),
+        borderSide: BorderSide.none,
       ),
     );
   }
